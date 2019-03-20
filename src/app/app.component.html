@@ -1,0 +1,15 @@
+<section class="app-container">
+  <mat-card class="admin-menu">Anonymous
+    <mat-slide-toggle (change)="slideUpdate($event)">Admin</mat-slide-toggle>
+  </mat-card>
+  <app-toolbar (menuToggle)="sidenav.toggle()"></app-toolbar>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav mode="side">
+      <app-navigation></app-navigation>
+    </mat-sidenav>
+    <mat-sidenav-content class="app-main-content">
+      <div class="loader" *ngIf="isLoadingData"></div>
+      <router-outlet *ngIf="!isLoadingData"></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</section>
