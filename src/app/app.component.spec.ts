@@ -12,8 +12,7 @@ import {
   MatToolbarModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NavigationComponent} from './shared/navigation/navigation.component';
-import {ToolbarComponent} from './shared/toolbar/toolbar.component';
+import {Component} from '@angular/core';
 
 describe('AppComponent', () => {
   let service: SecurityService;
@@ -22,8 +21,8 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        NavigationComponent,
-        ToolbarComponent
+        MockToolbarComponent,
+        MockNavigationComponent
       ],
       imports: [
         MatCardModule,
@@ -52,3 +51,21 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 });
+
+@Component({
+  selector: 'app-toolbar',
+  template: '<span>toolbar</span>',
+})
+class MockToolbarComponent {
+  constructor() {
+  }
+}
+
+@Component({
+  selector: 'app-navigation',
+  template: '<span>navigation</span>',
+})
+class MockNavigationComponent {
+  constructor() {
+  }
+}
