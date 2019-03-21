@@ -30,6 +30,7 @@ describe('BookService', () => {
 
         // 3. HttpTestingController former MockBackend
         backend.expectOne({url: '/api/book', method: 'GET'});
+        // 4. Verify that no unmatched requests are outstanding.
         backend.verify();
       })
     )
