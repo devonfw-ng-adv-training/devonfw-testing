@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {BookOverviewComponent} from './book-overview.component';
 import {MatCardModule, MatIconModule} from '@angular/material';
@@ -38,4 +38,12 @@ describe('BookOverviewComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should check observable', fakeAsync(() => {
+    expect(component).toBeTruthy();
+    component.books$.subscribe(item => {
+      expect(item).toEqual([{id: 4, author: 'Kent Beck', title: 'TDD', isbn: '9780321146533'} as Book])
+    });
+    tick();
+  }));
 });
