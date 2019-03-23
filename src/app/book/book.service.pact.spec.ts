@@ -3,18 +3,17 @@ import {TestBed} from '@angular/core/testing';
 import {PactWeb} from '@pact-foundation/pact/pact-web';
 import {BookService} from './book.service';
 import {HTTPMethod} from '@pact-foundation/pact/common/request';
-import {eachLike, somethingLike} from '@pact-foundation/pact/dsl/matchers';
-import {Book} from './book';
+import {eachLike, somethingLike, term} from '@pact-foundation/pact/dsl/matchers';
 
 describe('pact book service test suite', () => {
   let provider: PactWeb;
   let consumer: BookService;
-  const expectedBody = eachLike({
-    author: 'Patrick Rothfuss',
-    id: 68232,
-    isbn: '415521212',
-    title: 'The Name of the Wind'
-  } as Book, {min: 1});
+  const expectedBody = eachLike(somethingLike({
+    author: somethingLike('Patrick Rothfuss'),
+    id: somethingLike(68232),
+    isbn: term({generate: '415521212', matcher: '^[0-9]{9}$'}),
+    title: somethingLike('The Name of the Wind')
+  }), {min: 1});
 
   beforeAll((done: any) => {
     // Select mock server
