@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { BookService } from '../book.service';
-import { Book } from '../book';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {BookService} from '../book.service';
+import {Book} from '../book';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-book-overview',
@@ -10,8 +10,10 @@ import { Router } from '@angular/router';
 })
 export class BookOverviewComponent implements OnInit {
   books$;
+  lastClickedBook;
 
-  constructor(private book: BookService, private router: Router) {}
+  constructor(private book: BookService, private router: Router) {
+  }
 
   ngOnInit() {
     this.books$ = this.book.findAll();
@@ -23,5 +25,10 @@ export class BookOverviewComponent implements OnInit {
 
   newBook(): any {
     this.router.navigate(['/book']);
+  }
+
+  setLastClicked(clickedBook: Book) {
+    this.lastClickedBook = clickedBook;
+    console.log(this.lastClickedBook);
   }
 }

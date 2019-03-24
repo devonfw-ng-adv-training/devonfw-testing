@@ -9,6 +9,7 @@ import {
   ShowOnDirtyErrorStateMatcher,
   ErrorStateMatcher
 } from '@angular/material';
+import { BookCardComponent } from './book-card/book-card.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import {
     MatInputModule
   ],
   exports: [MatFormFieldModule],
-  declarations: [BookOverviewComponent, BookDetailsComponent],
+  declarations: [BookOverviewComponent, BookDetailsComponent, BookCardComponent],
   providers: [
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
   ]
