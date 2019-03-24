@@ -5,17 +5,17 @@ import {MatIconModule} from '@angular/material';
 import {BookService} from '../book.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {of} from 'rxjs';
-import {Book} from '../book';
-import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {By} from '@angular/platform-browser';
+import {MockComponents} from 'ng-mocks';
+import {BookCardComponent} from '../book-card/book-card.component';
 
-fdescribe('BookOverviewComponent', () => {
+describe('BookOverviewComponent', () => {
   let component: BookOverviewComponent;
   let fixture: ComponentFixture<BookOverviewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [BookOverviewComponent, MockBookCardComponent],
+      declarations: [BookOverviewComponent, MockComponents(BookCardComponent)],
       imports: [
         MatIconModule,
         RouterTestingModule.withRoutes([{path: 'books', component: BookOverviewComponent}])
@@ -62,21 +62,8 @@ fdescribe('BookOverviewComponent', () => {
   });
 
   // helper
-  function cardComponents(): MockBookCardComponent[] {
-    return fixture.debugElement.queryAll(By.directive(MockBookCardComponent))
+  function cardComponents(): BookCardComponent[] {
+    return fixture.debugElement.queryAll(By.directive(BookCardComponent))
       .map(element => element.componentInstance);
   }
 });
-
-
-@Component({
-  selector: 'app-book-card',
-  template: '<span>toolbar</span>',
-})
-class MockBookCardComponent {
-  @Input() book: Book;
-  @Output() parent: EventEmitter<Book> = new EventEmitter<Book>();
-
-  constructor() {
-  }
-}
