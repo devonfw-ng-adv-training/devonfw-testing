@@ -5,32 +5,40 @@ import {MatIconModule} from '@angular/material';
 import {BookService} from '../book.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {of} from 'rxjs';
-import {Book} from '../book';
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {DebugElement} from '@angular/core';
 import {By} from '@angular/platform-browser';
+import {SecurityService} from '../../shared/routing/security.service';
+import {MockComponents} from 'ng-mocks';
+import {BookCardComponent} from '../book-card/book-card.component';
 
-fdescribe('BookOverviewComponent', () => {
+describe('BookOverviewComponent', () => {
   let component: BookOverviewComponent;
   let fixture: ComponentFixture<BookOverviewComponent>;
+  let moduleService: SecurityService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [BookOverviewComponent, MockBookCardComponent],
+      declarations: [BookOverviewComponent, MockComponents(BookCardComponent)],
       imports: [
         MatIconModule,
         RouterTestingModule.withRoutes([{path: 'books', component: BookOverviewComponent}])
       ],
-      providers: [{
-        provide: BookService, useValue: {
-          findAll: function () {
-            return of([
-              {'id': 2, 'author': 'Gavin King', 'title': 'Java Persistence With Hibernate', 'isbn': '9781617290459'},
-              {'id': 3, 'author': 'Douglas Crockford', 'title': 'JavaScript: The Good Parts', 'isbn': '9780596517748'},
-              {'id': 4, 'author': 'Kent Beck', 'title': 'Test Driven Development', 'isbn': '9780321146533'}
-            ]);
+      providers: [
+        SecurityService,
+        {
+          provide: BookService, useValue: {
+            findAll: function () {
+              return of([
+                {'id': 2, 'author': 'Gavin King', 'title': 'Java Persistence With Hibernate', 'isbn': '9781617290459'},
+                {'id': 3, 'author': 'Douglas Crockford', 'title': 'JavaScript: The Good Parts', 'isbn': '9780596517748'},
+                {'id': 4, 'author': 'Kent Beck', 'title': 'Test Driven Development', 'isbn': '9780321146533'}
+              ]);
+            },
+            clearBooks: function () {
+              return of([]);
+            }
           }
-        }
-      }]
+        }]
     }).compileComponents();
   }));
 
@@ -38,6 +46,7 @@ fdescribe('BookOverviewComponent', () => {
     fixture = TestBed.createComponent(BookOverviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    moduleService = fixture.debugElement.injector.get(SecurityService);
   });
 
   it('should create', () => {
@@ -61,22 +70,36 @@ fdescribe('BookOverviewComponent', () => {
     expect(component.lastClickedBook).toEqual(cardComponents()[0].book);
   });
 
+  it('show guids of services', () => {
+    console.log('module: ' + moduleService.getUUID());
+    cardComponentsDebugElement()
+      .map(element => element.injector.get(SecurityService))
+      .forEach((service, index) => console.log('comp' + index + ': ' + service.getUUID()));
+  });
+
+  it('show guids of services - reset', fakeAsync(() => {
+    console.log('module: ' + moduleService.getUUID());
+    cardComponentsDebugElement()
+      .map(element => element.injector.get(SecurityService))
+      .forEach((service, index) => console.log('comp' + index + ': ' + service.getUUID()));
+
+    component.clearBooks();
+    tick();
+    fixture.detectChanges();
+    console.log('module: ' + moduleService.getUUID());
+    cardComponentsDebugElement()
+      .map(element => element.injector.get(SecurityService))
+      .forEach((service, index) => console.log('comp' + index + ': ' + service.getUUID()));
+  }));
+
   // helper
-  function cardComponents(): MockBookCardComponent[] {
-    return fixture.debugElement.queryAll(By.directive(MockBookCardComponent))
+  function cardComponents(): BookCardComponent[] {
+    return fixture.debugElement.queryAll(By.directive(BookCardComponent))
       .map(element => element.componentInstance);
   }
-});
 
-
-@Component({
-  selector: 'app-book-card',
-  template: '<span>toolbar</span>',
-})
-class MockBookCardComponent {
-  @Input() book: Book;
-  @Output() parent: EventEmitter<Book> = new EventEmitter<Book>();
-
-  constructor() {
+  // helper
+  function cardComponentsDebugElement(): DebugElement[] {
+    return fixture.debugElement.queryAll(By.directive(BookCardComponent));
   }
-}
+});

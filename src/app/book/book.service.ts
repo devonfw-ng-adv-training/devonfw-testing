@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Book } from './book';
-import { HttpClient } from '@angular/common/http';
-import { delay } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
+import {Book} from './book';
+import {HttpClient} from '@angular/common/http';
+import {delay} from 'rxjs/operators';
 
 @Injectable()
 export class BookService {
   private static BOOK_URI = '/api/book';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   findAll(): Observable<Book> {
     return this.http.get<Book>(BookService.BOOK_URI);
@@ -22,5 +23,9 @@ export class BookService {
 
   save(bookToSave: Book): Observable<Book> {
     return this.http.post<Book>(BookService.BOOK_URI, bookToSave);
+  }
+
+  clearBooks() {
+    return of([]);
   }
 }
