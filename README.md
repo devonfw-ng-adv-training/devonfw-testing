@@ -16,7 +16,7 @@ When installing under Windows, please make sure you check the following option:
 
 #### Node.js
 
-All examples have been implemented using [Node.js](https://nodejs.org/) `8.11.1`. 
+All examples have been implemented using [Node.js](https://nodejs.org/) `12.13.0`. 
 
 It is highly recommended to install the [Node Version Manager](https://github.com/creationix/nvm) which manages multiple active
 [Node.js](https://nodejs.org/) versions on your machine. The latest windows version of nvm can be downloaded [here](https://github.com/coreybutler/nvm-windows/releases/download/1.1.6/nvm-setup.zip).
@@ -24,29 +24,13 @@ It is highly recommended to install the [Node Version Manager](https://github.co
 Having the [Node Version Manager](https://github.com/creationix/nvm) installed, install Node.js:
 
 ```
-nvm install 8.11.1
+nvm install 12.13.0
 ```
 
 and set it to be used:
 
 ```
-nvm use 8.11.1
-```
-
-#### npm
-
-Having the Node.js installed you have also its package manager - [npm](https://www.npmjs.com/) installed. We have been using the `5.6.0` version of [npm](https://www.npmjs.com/).
-
-Check your current [npm](https://www.npmjs.com/) version: 
-
-```
-npm --version
-```
-
-If it's less than `5.6.0`, then:
-
-```
-npm install -g npm@5.6.0
+nvm use 12.13.0
 ```
 
 #### Angular CLI
