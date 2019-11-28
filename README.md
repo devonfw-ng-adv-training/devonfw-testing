@@ -33,19 +33,11 @@ and set it to be used:
 nvm use 12.13.0
 ```
 
-#### Angular CLI
-
-Having [npm](https://www.npmjs.com/) installed you can install [Angular CLI](https://github.com/angular/angular-cli). We have been using the `1.7.4` version:
-
-```
-npm install -g @angular/cli@1.7.4
-```
-
 ### Clone, install dependencies and run
 
 Clone this repository and go to the `0-start` branch:
 ```
-git clone https://github.com/devonfw-ng-adv-training/pwa.git -b 0-start
+git clone https://github.com/xxx -b 0-start
 ```
 
 Install dependencies using [npm](https://www.npmjs.com/):
