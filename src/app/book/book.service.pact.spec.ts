@@ -1,9 +1,9 @@
-import {HttpClientModule} from '@angular/common/http';
-import {TestBed} from '@angular/core/testing';
-import {PactWeb} from '@pact-foundation/pact/pact-web';
-import {BookService} from './book.service';
-import {HTTPMethod} from '@pact-foundation/pact/common/request';
-import {eachLike, somethingLike, term} from '@pact-foundation/pact/dsl/matchers';
+import { HTTPMethod } from '@pact-foundation/pact/common/request';
+import { eachLike, somethingLike, term } from '@pact-foundation/pact/dsl/matchers';
+import { PactWeb } from '@pact-foundation/pact/pact-web';
+import { HttpClientModule } from '@angular/common/http';
+import { TestBed } from '@angular/core/testing';
+import { BookService } from './book.service';
 
 describe('pact book service test suite', () => {
   let provider: PactWeb;
@@ -11,9 +11,9 @@ describe('pact book service test suite', () => {
   const expectedBody = eachLike(somethingLike({
     author: somethingLike('Patrick Rothfuss'),
     id: somethingLike(68232),
-    isbn: term({generate: '415521212', matcher: '^[0-9]{9}$'}),
+    isbn: term({ generate: '415521212', matcher: '^[0-9]{9}$' }),
     title: somethingLike('The Name of the Wind')
-  }), {min: 1});
+  }), { min: 1 });
 
   beforeAll((done: any) => {
     // Select mock server
